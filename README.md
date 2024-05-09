@@ -15,12 +15,12 @@ The Weather Forecast app provides real-time weather information for cities aroun
 
 ## Screenshots
 
-<img src="./assets/screenshots/1.png" alt="Image1" width=50% height=50%>
-<img src="./assets/screenshots/2.png" alt="Image2" width=50% height=50%>
+<img src="./assets/screenshots/1.png" alt="Image1" width=30% height=30%>
+<img src="./assets/screenshots/2.png" alt="Image2" width=30% height=30%>
 <img src="./assets/screenshots/3.png" alt="Image3" width=30% height=30%>
 <img src="./assets/screenshots/4.png" alt="Image4" width=30% height=30%>
-<img src="./assets/screenshots/5.png" alt="Image5" width=20% height=20%>
-<img src="./assets/screenshots/6.png" alt="Image6" width=20% height=20%>
+<img src="./assets/screenshots/5.png" alt="Image5" width=30% height=30%>
+<img src="./assets/screenshots/6.png" alt="Image6" width=30% height=30%>
 
 ## Contact
 

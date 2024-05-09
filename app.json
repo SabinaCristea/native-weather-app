@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -25,6 +23,20 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Raleway-Thin.ttf",
+            "./assets/fonts/Raleway-Medium.ttf",
+            "./assets/fonts/Raleway-Regular.ttf",
+            "./assets/fonts/Raleway-Bold.ttf",
+            "./assets/fonts/Raleway-ExtraLight.ttf"
+          ]
+        }
+      ]
+    ]
   }
 }

@@ -5,6 +5,5 @@ export default async function getWeatherApi(query) {
     `http://api.weatherstack.com/current?access_key=${KEY}&query=${query}`
   );
   const data = await res.json();
-
   return data;
 }

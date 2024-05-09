@@ -1,37 +1,11 @@
-import { View, Text, Button, ActivityIndicator, Image } from "react-native";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 import getWeatherApi from "../apis/getWeatherApi";
 import { useEffect, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
-import { getConditionIcon } from "../weather-icons";
-
-// const getConditionIcon = (type) => {
-//   switch (type.toLowerCase()) {
-//     case "overcast":
-//       return { color: "#FFD700", name: "☁" };
-//     case "sunny":
-//       return { color: "#FFD700", name: "sunny-outline" };
-//     case "clear":
-//       return { color: "#FFD700", name: "⚡️" };
-//     case "rain":
-//       return { color: "#6493EA", name: "💧" };
-//     case "showers":
-//       return { color: "#6493EA", name: "💧" };
-//     case "thunder":
-//       return { color: "#6493EA", name: "💧" };
-//     case "cloudy":
-//       return { color: "#FF5733", name: "🔥" };
-//     case "partly cloudy":
-//       return { color: "#66CC66", name: "🌿" };
-//     case "snow":
-//       return { color: "#66CC66", name: "🌿" };
-//     case "windy":
-//       return { color: "#66CC66", name: "🌿" };
-//     case "fog":
-//       return { color: "#66CC66", name: "🌿" };
-//     default:
-//       return { color: "#A0A0A0", name: "❓" };
-//   }
-// };
+import { useFonts } from "expo-font";
+import Card from "../components/Card";
+import Btn from "../components/Btn";
+import { getConditionIcon } from "../styles/weather-icons";
+import TimeAndPlace from "../components/TimeAndPlace";
 
 export default function HomeScreen({ navigation }) {
   const [data, setData] = useState({});
@@ -51,7 +25,15 @@ export default function HomeScreen({ navigation }) {
     fetchData();
   }, []);
 
-  if (isLoading) {
+  const [fontsLoaded] = useFonts({
+    RalewayThin: require("../assets/fonts/Raleway-Thin.ttf"),
+    RalewayExtraLight: require("../assets/fonts/Raleway-ExtraLight.ttf"),
+    RalewayMedium: require("../assets/fonts/Raleway-Medium.ttf"),
+    RalewayRegular: require("../assets/fonts/Raleway-Regular.ttf"),
+    RalewayBold: require("../assets/fonts/Raleway-Bold.ttf"),
+  });
+
+  if (isLoading || !fontsLoaded) {
     return (
       <View>
         <ActivityIndicator />
@@ -61,23 +43,31 @@ export default function HomeScreen({ navigation }) {
   }
 
   const { request, current } = data;
-
   const weatherIcon = getConditionIcon(current.weather_descriptions[0]);
 
   return (
-    <View>
-      <Text>Location: {request.query} </Text>
-      <Text>Temperature: {current.temperature} °C</Text>
-      <Text>Weather Condition: {current.weather_descriptions[0]}</Text>
-      {/* <Ionicons name="sunny-outline" size={100} color="orange" /> */}
-      <Ionicons name={weatherIcon.name} size={100} color={weatherIcon.color} />
-      {/* <Text>Location: Location </Text>
-      <Text>Temperature: temp °C</Text>
-      <Text>Weather Condition: how is weather</Text> */}
-      <Button
-        title="Search for another city"
-        onPress={() => navigation.navigate("Search")}
+    <View style={styles.homeContainer}>
+      <TimeAndPlace place={request.query} />
+      <Card
+        condition={current.weather_descriptions[0]}
+        icon={weatherIcon.name}
+        temperature={current.temperature}
+        wind={current.wind_speed}
+        humidity={current.humidity}
+        uv={current.uv_index}
+        visibility={current.visibility}
       />
+      <Btn onPress={() => navigation.navigate("Search")}>
+        Search for another city
+      </Btn>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  homeContainer: {
+    padding: 40,
+    flex: 1,
+    backgroundColor: "#E6F4F1",
+  },
+});

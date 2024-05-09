@@ -1,26 +1,44 @@
-import { View, Text, Button } from "react-native";
-import { getConditionIcon } from "../weather-icons";
-import { Ionicons } from "@expo/vector-icons";
+import { View } from "react-native";
+import { getConditionIcon } from "../styles/weather-icons";
+import Card from "../components/Card";
+import Btn from "../components/Btn";
+import { useLayoutEffect } from "react";
+import TimeAndPlace from "../components/TimeAndPlace";
 
 export default function DetailsScreen({ route, navigation }) {
-  const { cityData } = route.params;
+  const { cityData, location } = route.params;
+  const { request, current } = cityData;
 
-  const { request, location, current } = cityData;
+  useLayoutEffect(() => {
+    navigation.setOptions({ title: `Weather in ${location}` });
+  }, [navigation, location]);
 
   const weatherIcon = getConditionIcon(current.weather_descriptions[0]);
 
   return (
-    <View>
-      <Text>In {location.name}, the temperature is:</Text>
-      <Text>Location: {request.query} </Text>
-      <Text>Temperature: {current.temperature} °C</Text>
-      <Text>Weather Condition: {current.weather_descriptions[0]}</Text>
-      <Ionicons name={weatherIcon.name} size={100} color={weatherIcon.color} />
-
-      <Button
-        title="Back to homepage"
-        onPress={() => navigation.navigate("Home")}
+    <View style={{ padding: 40, backgroundColor: "#E6F4F1" }}>
+      <TimeAndPlace place={request.query} />
+      <Card
+        condition={current.weather_descriptions[0]}
+        icon={weatherIcon.name}
+        temperature={current.temperature}
+        wind={current.wind_speed}
+        humidity={current.humidity}
+        uv={current.uv_index}
+        visibility={current.visibility}
       />
+      <Btn
+        onPress={() => navigation.navigate("Search")}
+        style={{
+          marginTop: -15,
+          marginBottom: 20,
+          backgroundColor: "#001E45",
+        }}
+        btnTextStyle={{ color: "#F1FBFF" }}
+      >
+        Search another
+      </Btn>
+      <Btn onPress={() => navigation.navigate("Home")}>Back to homepage</Btn>
     </View>
   );
 }
